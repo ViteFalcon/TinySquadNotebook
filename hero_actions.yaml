@@ -1,0 +1,27 @@
+- name: Attack
+  cost:
+    action_points: 1
+- name: Move
+  cost:
+    action_points: 1
+  range: 3
+- name: Interact
+  cost:
+    cards: 1
+- name: Climb
+  cost:
+    cards: 1
+- name: Second Chance
+  cost:
+    cards: 1
+- name: Rest
+  cost:
+    action_points: 2
+- name: Engage
+  cost:
+    cards: 0
+    action_points: 0
+  range: 1
+- name: Disengage
+  cost:
+    cards: 3

@@ -1,0 +1,67 @@
+- id: natures_touch
+  name: Nature's Touch
+  desc: >
+    Deals +1DMG if you have at least 2 cards in hard with
+    value less than or equal to 3
+  target:
+    type: opponent
+    count:
+      op: eq
+      value: 1
+    conditions:
+      - id: target_is_in_range
+        range:
+          op: eq
+          value: 1
+  conditions:
+    - id: player_hand_contains_value
+      op: lte
+      value: 3
+      count: 2
+  actions:
+    - id: deal_damage
+      target: "{id:target}"
+      damage:
+        op: eq
+        value: 1
+
+- id: thornes
+  name: Thornes
+  target:
+    type: opponent
+    count:
+      op: all
+  actions:
+    - id: deal_damage
+      target: "{id:target}"
+      damage:
+        op: eq
+        value: 1
+
+- id: needle_and_thread
+  name: Needle & Thread
+  desc: >
+    The attacked enemy moves -2SQ durings its next MOV.
+  range:
+    op: eq
+    value: 1
+  conditions:
+    - id: high_check
+  target:
+    type: opponent
+    count:
+      op: eq
+      value: 1
+    conditions:
+      - id: target_is_in_range
+        range:
+          op: eq
+          value: 1
+  actions:
+    - id: deal_damage
+      target: "{id:target}"
+      damage:
+        op: eq
+        value: 1
+    - id: stack_mov_penalty
+      value: 2

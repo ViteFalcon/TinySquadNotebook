@@ -1,0 +1,37 @@
+- name: Ivy
+  life: 7
+  wepons:
+    - natures_touch
+    - thornes
+  abilities:
+    - vines
+    - wild_rose
+  on_create:
+    - action: accrue_token
+      token_id: rose
+      target: "{id:self}"
+      count: 1
+- name: Sally
+  life: 8
+  weapons:
+    - needle_and_thread
+- name: Wonder
+  life: 6
+- name: Harry
+  life: 6
+- name: Lara
+  life: 6
+- name: Bat
+  life: 7
+- name: Daeny
+  life: 6
+- name: Quinn
+  life: 6
+- name: Super
+  life: 6
+- name: Ripley
+  life: 6
+- name: Alice
+  life: 6
+- name: Furiosa
+  life: 7

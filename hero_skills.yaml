@@ -1,0 +1,85 @@
+- id: vines
+  name: Vines
+  desc: >
+    Target enemy standing within 1SQ of a rough,
+    obstacle or supply crate is engaged by vines.
+    I don't become engaged myself by this.
+  cost:
+    cards: 3
+  target:
+    type: opponent
+    count:
+      op: eq
+      value: 1
+    conditions:
+      - id: has_tile_proximity
+        type_types:
+          - rough
+          - obstacle
+          - supply_crate
+        proximity:
+          op: eq
+          value: 1
+  actions:
+    - action: engage
+      target: "{id:target}"
+
+- id: wild_rose
+  name: Wild Rose
+  desc: >
+    Target enemy that is at least 5SQ away gets the rose.
+    I will get it back if I deal 2DMG to that enemy during
+    a turn or if there are two allies adjacent to the rose
+    carrier at the start of its turn. When I get the rose
+    back you get +2VP.
+  target:
+    type: opponent
+    count:
+      op: eq
+      value: 1
+    conditions:
+      - id: target_is_in_range
+        range:
+          op: gte
+          value: 5
+  actions:
+    - action: attach_token
+      token_id: rose
+      count: 1
+      target: "{id:target}"
+      on_attach:
+        - action: attach_listeners
+          listeners:
+            - type: attack_listener
+              entity: "{id:target}"
+              actions:
+                - action: accumulate_damage
+                  variable: "damage_from_{id:self}"
+                  conditions:
+                    - id: is_attacker
+                      entity: "{id:self}"
+            - type: turn_start_listener
+              entity: "{id:target}[owner]"
+              actions:
+                - action: count_allies_in_proximity
+                  target: "{id:target}"
+                  variable: "{id:target}_allies_in_proxity"
+      on_detach:
+        - action: accrue_token
+          token_id: rose
+          count: 1
+          target: "{id:self}"
+        - action: accrue_victory_points
+          target: "{id:target}"
+          value: 2
+      auto_detach:
+        conditions:
+          - id: or
+            - id: int_check
+              variable: "damage_from_{id:self}"
+              op: gte
+              value: 2
+            - id: int_check
+              variable: "{id:target}_allies_in_proxity"
+              op: gte
+              value: 2
